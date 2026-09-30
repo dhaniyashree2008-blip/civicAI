@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CivicAI - Analysis Result</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #0b5ed7;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .success {
+            background: #d1e7dd;
+            color: #0f5132;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .priority {
+            font-size: 35px;
+            color: #0b5ed7;
+            font-weight: bold;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            background: #0b5ed7;
+        }
+
+        .secondary {
+            background: #198754;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌍 CivicAI</h1>
+    <p>AI-Powered Citizen Development Intelligence Platform</p>
+</header>
+
+<div class="container">
+
+    <div class="success">
+        ✓ Citizen request successfully analyzed
+    </div>
+
+    <div class="card">
+        <h2>Request Analysis</h2>
+
+        <div class="grid">
+
+            <div class="item">
+                <div class="label">Language</div>
+                <div class="value">{{ r.language }}</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Location</div>
+                <div class="value">{{ r.location }}</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Selected Category</div>
+                <div class="value">{{ r.category }}</div>
+            </div>
+
+            <div class="item">
+                <div class="label">AI Identified Category</div>
+                <div class="value">{{ r.detected_category }}</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Urgency</div>
+                <div class="value">{{ r.urgency }}</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Population</div>
+                <div class="value">{{ r.population }}</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Infrastructure Gap</div>
+                <div class="value">{{ r.infrastructure_gap }}%</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Citizen Demand</div>
+                <div class="value">{{ r.demand }}%</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Existing Investment</div>
+                <div class="value">{{ r.existing_investment }}</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Population Impact</div>
+                <div class="value">{{ r.population_impact }}%</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Priority Score</h2>
+
+        <div class="priority">
+            {{ r.priority_score }}/100
+        </div>
+
+        <p>
+            This score combines citizen demand, infrastructure gap,
+            population impact, and urgency.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Detected Issue</h2>
+        <p>{{ r.issue }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Citizen Impact</h2>
+        <p>{{ r.impact }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Recommended Development Project</h2>
+        <p>{{ r.recommendation }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Original Citizen Request</h2>
+        <p>{{ original_description }}</p>
+    </div>
+
+    <div class="buttons">
+        <a href="/">Submit Another Request</a>
+        <a href="/dashboard" class="secondary">Government Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>

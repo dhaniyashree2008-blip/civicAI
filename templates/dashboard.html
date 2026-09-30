@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CivicAI - Government Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: #0b5ed7;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .stat h2 {
+            font-size: 35px;
+            color: #0b5ed7;
+            margin: 5px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .label {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .priority {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0b5ed7;
+        }
+
+        .critical {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .high {
+            color: #fd7e14;
+            font-weight: bold;
+        }
+
+        .moderate {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .bar {
+            background: #ddd;
+            height: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            background: #0b5ed7;
+            height: 100%;
+        }
+
+        a {
+            display: inline-block;
+            background: #0b5ed7;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏛️ CivicAI Government Dashboard</h1>
+    <p>Development Intelligence & Priority Monitoring</p>
+</header>
+
+<div class="container">
+
+    <a href="/">← Citizen Portal</a>
+
+    <div class="stats">
+
+        <div class="stat">
+            <p>Total Requests</p>
+            <h2>{{ total_requests }}</h2>
+        </div>
+
+        <div class="stat">
+            <p>High Priority Requests</p>
+            <h2>{{ high_priority }}</h2>
+        </div>
+
+        <div class="stat">
+            <p>Locations Affected</p>
+            <h2>{{ locations_affected }}</h2>
+        </div>
+
+    </div>
+
+
+    <h2>🔥 Development Hotspots</h2>
+
+    {% if hotspots %}
+
+        {% for hotspot in hotspots %}
+
+        <div class="card">
+
+            <h2>{{ hotspot.location }}</h2>
+
+            <p>
+                Main Category:
+                <strong>{{ hotspot.main_category }}</strong>
+            </p>
+
+            <p>
+                Severity:
+                <span class="{{ hotspot.severity|lower }}">
+                    {{ hotspot.severity }}
+                </span>
+            </p>
+
+            <div class="grid">
+
+                <div class="item">
+                    <div class="label">Requests</div>
+                    <div class="value">
+                        {{ hotspot.requests }}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Average Priority</div>
+                    <div class="value">
+                        {{ hotspot.avg_priority }}/100
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Average Citizen Demand</div>
+                    <div class="value">
+                        {{ hotspot.avg_demand }}%
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Recommended Project</div>
+                    <div class="value">
+                        {{ hotspot.recommendation }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bar">
+                <div class="bar-fill"
+                     style="width: {{ hotspot.avg_priority }}%;">
+                </div>
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="card">
+            <p>No hotspots detected yet.</p>
+        </div>
+
+    {% endif %}
+
+
+    <h2>📊 Priority Development Requests</h2>
+
+    {% if requests %}
+
+        {% for r in requests %}
+
+        <div class="card">
+
+            <h2>{{ r.location }}</h2>
+
+            <p>
+                {{ r.issue }}
+            </p>
+
+            <div class="grid">
+
+                <div class="item">
+                    <div class="label">Category</div>
+                    <div class="value">
+                        {{ r.detected_category }}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Population</div>
+                    <div class="value">
+                        {{ r.population }}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Infrastructure Gap</div>
+                    <div class="value">
+                        {{ r.infrastructure_gap }}%
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Citizen Demand</div>
+                    <div class="value">
+                        {{ r.demand }}%
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Existing Investment</div>
+                    <div class="value">
+                        {{ r.existing_investment }}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Urgency</div>
+                    <div class="value">
+                        {{ r.urgency }}
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="priority">
+                Priority: {{ r.priority_score }}/100
+            </div>
+
+            <p>
+                <strong>Recommendation:</strong>
+                {{ r.recommendation }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="card">
+            <p>No citizen requests submitted yet.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
